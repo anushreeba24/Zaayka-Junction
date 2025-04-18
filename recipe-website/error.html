@@ -1,0 +1,1259 @@
+<?php
+// PHP session or any other server-side logic can go here
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Not Found | Zaayka Junction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7c59f;
+            --dark: #2b2d42;
+            --light: #ffffff;
+            --accent: #4ecdc4;
+            --error: #ff5e5b;
+            --gradient-start: #ffb347;
+            --gradient-end: #ff3c00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        @keyframes floatReverse {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(-5deg);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        @keyframes floatSideways {
+            0% {
+                transform: translateX(0px) translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateX(10px) translateY(-5px) rotate(5deg);
+            }
+            66% {
+                transform: translateX(-10px) translateY(-10px) rotate(-5deg);
+            }
+            100% {
+                transform: translateX(0px) translateY(0px) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Bubble animation */
+        @keyframes bubble {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-60px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Bubble wobble animation */
+        @keyframes bubbleWobble {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            33% {
+                transform: translateX(-3px);
+            }
+            66% {
+                transform: translateX(3px);
+            }
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating Utensils */
+        .floating-utensils {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .utensil {
+            position: absolute;
+            color: rgba(0, 0, 0, 0.08);
+            font-size: 2rem;
+            z-index: -1;
+        }
+
+        .utensil-1 {
+            top: 10%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+            font-size: 2.5rem;
+        }
+
+        .utensil-2 {
+            top: 20%;
+            right: 15%;
+            animation: floatReverse 7s ease-in-out infinite;
+            font-size: 2.2rem;
+        }
+
+        .utensil-3 {
+            bottom: 15%;
+            left: 20%;
+            animation: floatSideways 9s ease-in-out infinite;
+            font-size: 1.8rem;
+        }
+
+        .utensil-4 {
+            bottom: 25%;
+            right: 10%;
+            animation: float 10s ease-in-out infinite;
+            font-size: 2rem;
+        }
+
+        .utensil-5 {
+            top: 40%;
+            left: 5%;
+            animation: floatReverse 11s ease-in-out infinite;
+            font-size: 1.5rem;
+        }
+
+        .utensil-6 {
+            top: 50%;
+            right: 5%;
+            animation: floatSideways 12s ease-in-out infinite;
+            font-size: 1.7rem;
+        }
+
+        .utensil-7 {
+            bottom: 40%;
+            left: 15%;
+            animation: float 9s ease-in-out infinite;
+            font-size: 2.3rem;
+        }
+
+        .utensil-8 {
+            bottom: 10%;
+            right: 20%;
+            animation: floatReverse 8s ease-in-out infinite;
+            font-size: 1.9rem;
+        }
+
+        .error-illustration {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pot {
+            width: 120px;
+            height: 80px;
+            background-color: #d3d3d3;
+            border-radius: 0 0 60px 60px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .pot:before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 20px;
+            background-color: #b8b8b8;
+            border-radius: 10px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pot:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background-color: #b8b8b8;
+            border-radius: 15px;
+            top: 10px;
+            right: -15px;
+            transform: rotate(30deg);
+        }
+
+        /* Pot liquid */
+        .pot-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to bottom, rgba(255, 107, 53, 0.6), rgba(255, 193, 7, 0.8));
+            border-radius: 0 0 60px 60px;
+            overflow: hidden;
+        }
+
+        /* Bubbles in pot */
+        .bubbles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .bubble:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 20%;
+            animation: bubble 2s linear infinite, bubbleWobble 0.8s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            left: 40%;
+            animation: bubble 2.5s linear infinite 0.3s, bubbleWobble 1s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            left: 60%;
+            animation: bubble 1.8s linear infinite 0.6s, bubbleWobble 0.6s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            left: 80%;
+            animation: bubble 2.2s linear infinite 0.9s, bubbleWobble 0.9s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            left: 30%;
+            animation: bubble 2.3s linear infinite 1.2s, bubbleWobble 0.7s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(6) {
+            width: 9px;
+            height: 9px;
+            left: 70%;
+            animation: bubble 1.9s linear infinite 1.5s, bubbleWobble 0.8s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(7) {
+            width: 5px;
+            height: 5px;
+            left: 50%;
+            animation: bubble 1.7s linear infinite 1.8s, bubbleWobble 0.5s ease-in-out infinite;
+        }
+
+        .steam {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .steam span {
+            position: absolute;
+            bottom: 0;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: steam 2s infinite;
+        }
+
+        .steam span:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            left: -30px;
+            animation-delay: 0.2s;
+        }
+
+        .steam span:nth-child(2) {
+            width: 25px;
+            height: 25px;
+            left: -10px;
+            animation-delay: 0.6s;
+        }
+
+        .steam span:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            left: 15px;
+            animation-delay: 1s;
+        }
+
+        @keyframes steam {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-80px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .error-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--error);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--dark);
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .search-form {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 13px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .search-button:hover {
+            background-color: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(255, 107, 53, 0.4);
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.7s;
+        }
+
+        .home-link i {
+            margin-right: 8px;
+        }
+
+        .home-link:hover {
+            color: #e55a2b;
+            transform: translateX(-5px);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--secondary), transparent);
+            margin: 50px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.9s;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .suggestions h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--dark);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            position: relative;
+            display: inline-block;
+        }
+
+        .suggestions h2:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .recipe-card:hover .recipe-image {
+            transform: scale(1.05);
+        }
+
+        .recipe-image-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .recipe-time-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .recipe-time-badge i {
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+
+        .recipe-difficulty {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+
+        .recipe-info {
+            padding: 20px;
+        }
+
+        .recipe-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .recipe-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        .recipe-rating {
+            display: flex;
+            align-items: center;
+            color: #ffc107;
+        }
+
+        .recipe-rating span {
+            color: #666;
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: #aaaaaa;
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--gradient-end);
+            -webkit-text-fill-color: var(--gradient-end);
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        .skeleton-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .skeleton-image {
+            height: 200px;
+            width: 100%;
+        }
+
+        .skeleton-content {
+            padding: 20px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-text:last-child {
+            width: 80%;
+        }
+
+        .error-message {
+            background-color: rgba(255, 94, 91, 0.1);
+            border-left: 4px solid var(--error);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px auto;
+            max-width: 700px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        .error-message i {
+            font-size: 24px;
+            color: var(--error);
+            margin-right: 15px;
+        }
+
+        .error-message-content {
+            flex: 1;
+        }
+
+        .error-message-content h3 {
+            margin-bottom: 5px;
+            color: var(--error);
+        }
+
+        .error-message-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            animation: none;
+            opacity: 1;
+        }
+
+        .animated-icon {
+            animation: bounce 2s infinite;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .error-illustration {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .pot {
+                width: 90px;
+                height: 60px;
+            }
+            
+            .recipe-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .recipe-image-container {
+                height: 150px;
+            }
+            
+            .utensil {
+                font-size: 1.5rem;
+            }
+            
+            .utensil-1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .search-input {
+                padding: 15px 20px;
+            }
+            
+            .search-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .recipe-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .error-message {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .error-message i {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .utensil {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.php" class="logo">
+            <i class="fas fa-utensils logo-icon"></i>
+            <div class="logo-text">Zaayka <span>Junction</span></div>
+        </a>
+        
+        <div class="error-container">
+            <!-- Floating Utensils Animation -->
+            <div class="floating-utensils">
+                <i class="fas fa-utensils utensil utensil-1"></i>
+                <i class="fas fa-knife utensil utensil-2"></i>
+                <i class="fas fa-blender utensil utensil-3"></i>
+                <i class="fas fa-mortar-pestle utensil utensil-4"></i>
+                <i class="fas fa-pepper-hot utensil utensil-5"></i>
+                <i class="fas fa-cookie utensil utensil-6"></i>
+                <i class="fas fa-cheese utensil utensil-7"></i>
+                <i class="fas fa-drumstick-bite utensil utensil-8"></i>
+            </div>
+            
+            <div class="error-illustration">
+                <div class="pot">
+                    <!-- Added pot liquid with bubbling effect -->
+                    <div class="pot-liquid">
+                        <div class="bubbles">
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="steam">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="error-badge">404</div>
+            </div>
+            
+            <h1>Recipe Not Found</h1>
+            <p>We couldn't find the recipe you're looking for. Our chefs are busy cooking up new recipes to add to our collection!</p>
+            
+            <div class="error-message">
+                <i class="fas fa-info-circle animated-icon"></i>
+                <div class="error-message-content">
+                    <h3>What happened?</h3>
+                    <p>The recipe you're looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                </div>
+            </div>
+            
+            <form class="search-form" id="searchForm">
+                <input type="text" class="search-input" placeholder="Try searching for another recipe..." id="searchInput">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+            
+            <a href="index.php" class="home-link">
+                <i class="fas fa-home"></i> Return to Homepage
+            </a>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="suggestions">
+            <h2>Popular Recipes You Might Like</h2>
+            <div class="recipe-grid" id="recipeGrid">
+                <!-- Recipe cards will be inserted here by JavaScript -->
+                <!-- Skeleton loaders -->
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 Zaayka <strong>Junction</strong> | All recipes and content are property of Zaayka Junction</p>
+    </footer>
+
+    <script>
+        // Sample recipe data (in a real application, this would come from your database)
+        const popularRecipes = [
+            {
+                title: "Classic Spaghetti Carbonara",
+                time: "25 mins",
+                difficulty: "Medium",
+                description: "A creamy Italian pasta dish with eggs, cheese, pancetta, and pepper.",
+                image: "assets/images/bc.jpeg",
+                rating: 4.8,
+                reviews: 124
+            },
+            {
+                title: "Vegetable Stir Fry",
+                time: "20 mins",
+                difficulty: "Easy",
+                description: "A quick and healthy mix of fresh vegetables with a savory sauce.",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: 4.5,
+                reviews: 89
+            },
+            {
+                title: "Homemade Margherita Pizza",
+                time: "45 mins",
+                difficulty: "Medium",
+                description: "Classic Italian pizza with fresh mozzarella, tomatoes, and basil.",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: 4.9,
+                reviews: 203
+            },
+            {
+                title: "Chocolate Chip Cookies",
+                time: "30 mins",
+                difficulty: "Easy",
+                description: "Soft and chewy cookies with melty chocolate chips in every bite.",
+                image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: 4.7,
+                reviews: 156
+            }
+        ];
+
+        // Get the search query from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('q');
+
+        // If there's a search query, display it in the input field and update the page title
+        if (searchQuery) {
+            document.getElementById('searchInput').value = searchQuery;
+            document.title = ${searchQuery} - Recipe Not Found | Zaayka Junction;
+            document.querySelector('h1').textContent = "${searchQuery}" Not Found;
+        }
+
+        // Handle search form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                // Add loading animation
+                document.querySelector('.search-button').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                
+                // Simulate search delay
+                setTimeout(() => {
+                    // In a real application, you would redirect to your search results page
+                    window.location.href = search.php?q=${encodeURIComponent(query)};
+                }, 800);
+            }
+        });
+
+        // Simulate loading delay for recipes
+        setTimeout(() => {
+            // Remove skeleton loaders
+            document.getElementById('recipeGrid').innerHTML = '';
+            
+            // Populate recipe suggestions
+            const recipeGrid = document.getElementById('recipeGrid');
+            
+            popularRecipes.forEach((recipe, index) => {
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'recipe-card';
+                recipeCard.style.animationDelay = ${1.2 + (index * 0.2)}s;
+                recipeCard.style.animation = 'fadeIn 0.8s ease-out forwards';
+                
+                recipeCard.innerHTML = `
+                    <div class="recipe-image-container">
+                        <img src="${recipe.image}" alt="${recipe.title}" class="recipe-image">
+                        <div class="recipe-time-badge">
+                            <i class="far fa-clock"></i> ${recipe.time}
+                        </div>
+                        <div class="recipe-difficulty">${recipe.difficulty}</div>
+                    </div>
+                    <div class="recipe-info">
+                        <h3 class="recipe-title">${recipe.title}</h3>
+                        <p class="recipe-description">${recipe.description}</p>
+                        <div class="recipe-meta">
+                            <div class="recipe-rating">
+                                ${generateStars(recipe.rating)}
+                                <span>(${recipe.reviews})</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click event to redirect to recipe page with a nice transition
+                recipeCard.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    this.style.opacity = '0.8';
+                    
+                    // In a real application, you would redirect to the actual recipe page
+                    setTimeout(() => {
+                        window.location.href = recipe.php?title=${encodeURIComponent(recipe.title)};
+                    }, 300);
+                });
+                
+                recipeGrid.appendChild(recipeCard);
+            });
+        }, 2000);
+
+        // Generate star ratings
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (halfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Add interactive elements and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the error badge on hover
+            const errorBadge = document.querySelector('.error-badge');
+            errorBadge.addEventListener('mouseover', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 2s infinite';
+                }, 10);
+            });
+            
+            // Add floating animation to the logo
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('mouseover', function() {
+                this.querySelector('.logo-icon').style.animation = 'spin 2s ease-in-out';
+            });
+            
+            // Add animated elements to the page
+            const animateElements = () => {
+                // Animate the pot
+                const pot = document.querySelector('.pot');
+                pot.style.animation = 'pulse 3s infinite';
+                
+                // Animate the error badge
+                const errorBadge = document.querySelector('.error-badge');
+                errorBadge.style.animation = 'pulse 2s infinite';
+                
+                // Animate the search button on hover
+                const searchButton = document.querySelector('.search-button');
+                searchButton.addEventListener('mouseover', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                searchButton.addEventListener('mouseout', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                // Animate the home link
+                const homeLink = document.querySelector('.home-link');
+                homeLink.addEventListener('mouseover', function() {
+                    this.querySelector('i').style.animation = 'bounce 1s';
+                });
+                homeLink.addEventListener('mouseout', function() {
+                    this.querySelector('i').style.animation = 'none';
+                });
+                
+                // Add random movement to utensils on mouse move
+                const utensils = document.querySelectorAll('.utensil');
+                document.addEventListener('mousemove', function(e) {
+                    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                    
+                    utensils.forEach((utensil, index) => {
+                        const factor = (index % 3) + 1;
+                        utensil.style.transform = translate(${moveX * factor}px, ${moveY * factor}px) rotate(${moveX * factor}deg);
+                    });
+                });
+                
+                // Create additional bubbles dynamically for more realistic effect
+                const createBubbles = () => {
+                    const bubbles = document.querySelector('.bubbles');
+                    const potLiquid = document.querySelector('.pot-liquid');
+                    
+                    // Create a new bubble
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    
+                    // Random size between 4px and 10px
+                    const size = Math.floor(Math.random() * 6) + 4;
+                    bubble.style.width = ${size}px;
+                    bubble.style.height = ${size}px;
+                    
+                    // Random position
+                    const left = Math.floor(Math.random() * 80) + 10;
+                    bubble.style.left = ${left}%;
+                    
+                    // Random animation duration
+                    const duration = (Math.random() * 1) + 1.5;
+                    bubble.style.animation = bubble ${duration}s linear forwards, bubbleWobble ${duration/3}s ease-in-out infinite;
+                    
+                    bubbles.appendChild(bubble);
+                    
+                    // Remove bubble after animation completes
+                    setTimeout(() => {
+                        bubble.remove();
+                    }, duration * 1000);
+                };
+                
+                // Create bubbles at random intervals
+                setInterval(createBubbles, 300);
+            };
+            
+            // Run animations
+            animateElements();
+            
+            // Focus the search input with a slight delay for better UX
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 1500);
+            
+            // Add parallax effect to elements on mouse move
+            document.addEventListener('mousemove', function(e) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                
+                // Apply subtle movement to the error illustration
+                const illustration = document.querySelector('.error-illustration');
+                illustration.style.transform = translateY(${moveY * 5}px) translateX(${moveX * 5}px);
+            });
+        });
+        
+        // Add scroll animations
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            
+            // Animate elements when they come into view
+            const animateOnScroll = (selector, animationClass) => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight * 0.8) {
+                        element.classList.add(animationClass);
+                    }
+                });
+            };
+            
+            // Apply animations to different elements
+            animateOnScroll('.suggestions h2', 'visible');
+            animateOnScroll('.divider', 'visible');
+        });
+    </script>
+</body>
+</html>
