@@ -91,10 +91,14 @@ Users must be logged in to:
 🖼 Screenshots
 
 🏠 Home / Feed Page
+![HOME](./images/1.png)
 
-📄 Recipe View Page
+🏠 lOGIN
+![LOGIN](./images/2.png)
 
-🔔 Notification Page
+🏠 REGEISTER
+![REGEISTER](./images/3.png)
+
 
 ---
 
