@@ -90,9 +90,9 @@ Users must be logged in to:
 
 ## 📸 Screenshots
 
-| Feed Page                | Recipe View Page         |
-|--------------------------|--------------------------|
-| ![feed](./assets/images/feed-preview.png) | ![view](./assets/images/view-preview.png) |
+/images/1.png
+/images/2.png
+/images/3.png
 
 > *(Update screenshots in `assets/images/` if needed)*
 
