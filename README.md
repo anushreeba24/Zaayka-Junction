@@ -94,8 +94,6 @@ Users must be logged in to:
 /images/2.png
 /images/3.png
 
-> *(Update screenshots in `assets/images/` if needed)*
-
 ---
 
 ## 🔧 Upcoming Features
