@@ -93,10 +93,10 @@ Users must be logged in to:
 🏠 Home / Feed Page
 ![HOME](./images/1.png)
 
-🏠 lOGIN
+ lOGIN
 ![LOGIN](./images/2.png)
 
-🏠 REGEISTER
+ REGEISTER
 ![REGEISTER](./images/3.png)
 
 
